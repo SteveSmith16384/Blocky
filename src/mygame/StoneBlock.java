@@ -1,26 +1,23 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mygame;
 
-import mygame.blocks.Block;
-import mygame.blocks.BlockTextureLocator;
+import mygame.blocks.IBlock;
+import mygame.blocks.IBlockTextureLocator;
 import mygame.blocks.SimpleBlockTexture;
 
 /**
  *
  * @author bogdanpandia
  */
-public class StoneBlock implements Block{
-    private final BlockTextureLocator blockTextureLocator;
+public class StoneBlock implements IBlock {
 
-    public StoneBlock() {
-        blockTextureLocator = new SimpleBlockTexture(0, 0);
-    }
-    
-    public BlockTextureLocator getTexture() {
-        return blockTextureLocator;
-    }
-    
+	private final IBlockTextureLocator blockTextureLocator;
+
+	public StoneBlock() {
+		blockTextureLocator = new SimpleBlockTexture(0, 0);
+	}
+
+	public IBlockTextureLocator getTexture() {
+		return blockTextureLocator;
+	}
+
 }

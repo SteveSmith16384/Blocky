@@ -1,11 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mygame.blocks;
 
-import com.jme3.bounding.BoundingVolume;
-import com.jme3.renderer.Camera;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.scene.Spatial;
@@ -16,7 +10,8 @@ import com.jme3.scene.control.Control;
  *
  * @author bogdanpandia
  */
-public class BlockLodControl extends AbstractControl implements Cloneable{
+public class BlockLodControl extends AbstractControl implements Cloneable {
+	
     private float maxDistance;
 
     public BlockLodControl() {

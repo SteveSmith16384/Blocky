@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package mygame.blocks;
 
 import mygame.blocks.meshs.Face;
@@ -10,7 +6,8 @@ import mygame.blocks.meshs.Face;
  *
  * @author bogdanpandia
  */
-public class SimpleBlockTexture implements BlockTexture,BlockTextureLocator{
+public class SimpleBlockTexture implements IBlockTexture, IBlockTextureLocator {
+	
     private final int row;
     private final int column;
 
@@ -27,7 +24,7 @@ public class SimpleBlockTexture implements BlockTexture,BlockTextureLocator{
         return row;
     }
 
-    public BlockTexture getFaceTexture(Face face) {
+    public IBlockTexture getFaceTexture(Face face) {
         return this;
     }
     
