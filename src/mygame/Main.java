@@ -28,12 +28,13 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.water.WaterFilter;
-import com.scs.overcraft.voxels.VoxelBlockNode;
 import com.scs.overcraft.voxels.VoxelChunk;
 
 import mygame.blocks.BlockTerrainControl;
-import mygame.blocks.IBlockTerrainListener;
 import mygame.blocks.ChunkControl;
+import mygame.blocks.IBlockTerrainListener;
+import mygame.blocktypes.DirtBlock;
+import mygame.blocktypes.StoneBlock;
 import mygame.util.Vector3Int;
 
 /**
@@ -89,23 +90,20 @@ public class Main extends SimpleApplication implements ActionListener{
 		bas.getPhysicsSpace().addAll(terrain);
 
 		blocks.registerBlock(new StoneBlock());
+		blocks.registerBlock(new DirtBlock());
 
-		ImageBasedHeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/heightmap_australia.jpg").getImage(), .5f);
+		ImageBasedHeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/test500x500.jpg").getImage(), .5f);
 		heightmap.load();
 
 		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0),heightmap, StoneBlock.class);		
 
 		// Create a moon
 		int CHUNK_SIZE = VoxelChunk.SIZE;
-		for (int z = 0; z < CHUNK_SIZE; z++)
-	    {
-	        for (int y = 0; y < CHUNK_SIZE; y++)
-	        {
-	            for (int x = 0; x < CHUNK_SIZE; x++)
-	            {
-	                if (Math.sqrt((float) (x-CHUNK_SIZE/2)*(x-CHUNK_SIZE/2) + (y-CHUNK_SIZE/2)*(y-CHUNK_SIZE/2) + (z-CHUNK_SIZE/2)*(z-CHUNK_SIZE/2)) <= CHUNK_SIZE/2)
-	                {
-						blocks.setBlock(new Vector3Int(x+50, y+50, z+50), StoneBlock.class);
+		for (int z = 0; z < CHUNK_SIZE; z++) {
+	        for (int y = 0; y < CHUNK_SIZE; y++) {
+	            for (int x = 0; x < CHUNK_SIZE; x++) {
+	                if (Math.sqrt((float) (x-CHUNK_SIZE/2)*(x-CHUNK_SIZE/2) + (y-CHUNK_SIZE/2)*(y-CHUNK_SIZE/2) + (z-CHUNK_SIZE/2)*(z-CHUNK_SIZE/2)) <= CHUNK_SIZE/2) {
+						blocks.setBlock(new Vector3Int(x+50, y+50, z+50), DirtBlock.class);
 	                }
 	            }
 	        }

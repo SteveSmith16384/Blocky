@@ -1,4 +1,4 @@
-package mygame;
+package mygame.blocktypes;
 
 import mygame.blocks.IBlock;
 import mygame.blocks.IBlockTextureLocator;
