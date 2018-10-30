@@ -28,7 +28,6 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.water.WaterFilter;
-import com.scs.overcraft.voxels.VoxelChunk;
 
 import mygame.blocks.BlockTerrainControl;
 import mygame.blocks.ChunkControl;
@@ -41,7 +40,7 @@ import mygame.util.Vector3Int;
  *
  * @author normenhansen
  */
-public class Main extends SimpleApplication implements ActionListener{
+public class Main extends SimpleApplication implements ActionListener {
 
 	public static void main(String[] args) {
 		Main app = new Main();
@@ -72,6 +71,7 @@ public class Main extends SimpleApplication implements ActionListener{
 		blockSettings.setMaterial(assetManager.loadMaterial("Materials/BlockyTexture.j3m"));
 		blockSettings.setWorldSize(new Vector3Int(50, 10, 50));
 		blockSettings.setViewDistance(200f);
+		
 		blocks = new BlockTerrainControl(blockSettings);
 
 		this.cam.setFrustumFar(blockSettings.getViewDistance());
@@ -80,7 +80,6 @@ public class Main extends SimpleApplication implements ActionListener{
 		player.setJumpSpeed(20);
 		player.setFallSpeed(30);
 		player.setGravity(0);
-
 
 		player.setPhysicsLocation(new Vector3f(50, 100, 50));
 		bas.getPhysicsSpace().add(player);
@@ -95,14 +94,14 @@ public class Main extends SimpleApplication implements ActionListener{
 		ImageBasedHeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/test500x500.jpg").getImage(), .5f);
 		heightmap.load();
 
-		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0),heightmap, StoneBlock.class);		
+		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0), heightmap, StoneBlock.class);		
 
-		// Create a moon
-		int CHUNK_SIZE = VoxelChunk.SIZE;
-		for (int z = 0; z < CHUNK_SIZE; z++) {
-	        for (int y = 0; y < CHUNK_SIZE; y++) {
-	            for (int x = 0; x < CHUNK_SIZE; x++) {
-	                if (Math.sqrt((float) (x-CHUNK_SIZE/2)*(x-CHUNK_SIZE/2) + (y-CHUNK_SIZE/2)*(y-CHUNK_SIZE/2) + (z-CHUNK_SIZE/2)*(z-CHUNK_SIZE/2)) <= CHUNK_SIZE/2) {
+		// Create a moon manually
+		int diameter = 16;
+		for (int z = 0; z < diameter; z++) {
+	        for (int y = 0; y < diameter; y++) {
+	            for (int x = 0; x < diameter; x++) {
+	                if (Math.sqrt((float) (x-diameter/2)*(x-diameter/2) + (y-diameter/2)*(y-diameter/2) + (z-diameter/2)*(z-diameter/2)) <= diameter/2) {
 						blocks.setBlock(new Vector3Int(x+50, y+50, z+50), DirtBlock.class);
 	                }
 	            }

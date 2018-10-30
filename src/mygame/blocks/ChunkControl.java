@@ -18,7 +18,7 @@ import mygame.util.Vector3Int;
  *
  * @author bogdan
  */
-public class ChunkControl extends AbstractControl implements Savable{
+public class ChunkControl extends AbstractControl implements Savable {
 
 	private final IBlock[][][] blocks;
 	private final float blockSize;
@@ -41,12 +41,13 @@ public class ChunkControl extends AbstractControl implements Savable{
 		this.blocks = new IBlock[this.size.getX()][this.size.getY()][this.size.getZ()];
 
 		Material material = terrain.getSettings().getMaterial();
-		this.geom = new Geometry("terrain "+location);
+		this.geom = new Geometry("terrain " + location);
 		geom.setMaterial(material);
 
 		generator = new FaceCullMeshGenerator(size, blockSize, location, blocks);
 
 	}
+	
 
 	@Override
 	public void setSpatial(Spatial spatial) {

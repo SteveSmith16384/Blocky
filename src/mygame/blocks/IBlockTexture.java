@@ -8,4 +8,5 @@ public interface IBlockTexture {
 
 	public int getRow();
 	public int getColumn();
+	
 }
