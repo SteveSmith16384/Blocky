@@ -16,6 +16,7 @@ import com.jme3.input.MouseInput;
 import com.jme3.input.controls.ActionListener;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.input.controls.MouseButtonTrigger;
+import com.jme3.light.AmbientLight;
 import com.jme3.light.DirectionalLight;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Ray;
@@ -27,6 +28,8 @@ import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.water.WaterFilter;
+import com.scs.overcraft.voxels.VoxelBlockNode;
+import com.scs.overcraft.voxels.VoxelChunk;
 
 import mygame.blocks.BlockTerrainControl;
 import mygame.blocks.IBlockTerrainListener;
@@ -92,6 +95,23 @@ public class Main extends SimpleApplication implements ActionListener{
 
 		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0),heightmap, StoneBlock.class);		
 
+		// Create a moon
+		int CHUNK_SIZE = VoxelChunk.SIZE;
+		for (int z = 0; z < CHUNK_SIZE; z++)
+	    {
+	        for (int y = 0; y < CHUNK_SIZE; y++)
+	        {
+	            for (int x = 0; x < CHUNK_SIZE; x++)
+	            {
+	                if (Math.sqrt((float) (x-CHUNK_SIZE/2)*(x-CHUNK_SIZE/2) + (y-CHUNK_SIZE/2)*(y-CHUNK_SIZE/2) + (z-CHUNK_SIZE/2)*(z-CHUNK_SIZE/2)) <= CHUNK_SIZE/2)
+	                {
+						blocks.setBlock(new Vector3Int(x+50, y+50, z+50), StoneBlock.class);
+	                }
+	            }
+	        }
+	    }
+
+		
 		blocks.addListener(new IBlockTerrainListener() {
 
 			@Override
@@ -112,6 +132,11 @@ public class Main extends SimpleApplication implements ActionListener{
 		sun.setDirection(new Vector3f(-5, -4, -4).normalizeLocal());
 
 		rootNode.addLight(sun);
+		
+		AmbientLight al = new AmbientLight();
+		al.setColor(ColorRGBA.White.mult(.5f));
+		rootNode.addLight(al);
+
 		//        sl.setSpotInnerAngle(50 * FastMath.DEG_TO_RAD);
 		//        sl.setSpotOuterAngle(90 * FastMath.DEG_TO_RAD);
 		//        sl.setSpotRange(blockSettings.getViewDistance() - 10);
