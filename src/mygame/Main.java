@@ -65,7 +65,7 @@ public class Main extends SimpleApplication implements ActionListener {
 		bas.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
 		this.stateManager.attach(bas);
 
-		final BlockSettings blockSettings = new BlockSettings(this);
+		final BlockSettings blockSettings = new BlockSettings();
 		blockSettings.setChunkSize(new Vector3Int(16, 16, 16));
 		blockSettings.setBlockSize(2);
 		blockSettings.setMaterial(assetManager.loadMaterial("Materials/BlockyTexture.j3m"));
@@ -93,7 +93,6 @@ public class Main extends SimpleApplication implements ActionListener {
 
 		ImageBasedHeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/test500x500.jpg").getImage(), .5f);
 		heightmap.load();
-
 		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0), heightmap, StoneBlock.class);		
 
 		// Create a moon manually
