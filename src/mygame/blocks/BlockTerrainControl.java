@@ -39,10 +39,9 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		this.settings = settings;
 		this.chunks = new ChunkControl[worldSize.getX()][worldSize.getY()][worldSize.getZ()];
 		blockTypes = new HashMap<Class<? extends IBlock>, IBlock>();
-
-
 	}
 
+	
 	@Override
 	protected void controlUpdate(float tpf) {
 		if(needsUpdate){

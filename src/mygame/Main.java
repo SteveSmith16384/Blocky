@@ -66,7 +66,7 @@ public class Main extends SimpleApplication implements ActionListener {
 
 		final BlockSettings blockSettings = new BlockSettings();
 		blockSettings.setChunkSize(new Vector3Int(16, 16, 16));
-		blockSettings.setBlockSize(2);
+		blockSettings.setBlockSize(1f);
 		blockSettings.setMaterial(assetManager.loadMaterial("Materials/BlockyTexture.j3m"));
 		blockSettings.setWorldSize(new Vector3Int(50, 10, 50));
 		blockSettings.setViewDistance(200f);
