@@ -82,15 +82,18 @@ public class ChunkControl extends AbstractControl implements Savable {
 			needsUpdate = true;
 		}
 	}
+	
 
 	@Override
 	protected void controlUpdate(float tpf) {
-		if(needsUpdate){
+		if (needsUpdate) {
 			needsUpdate = false;
 			geom.setMesh(regenerateMesh());
 			geom.updateModelBound();
 		}
 	}
+	
+	
 	@Override
 	protected void controlRender(RenderManager rm, ViewPort vp) {
 	}

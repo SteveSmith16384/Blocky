@@ -51,7 +51,6 @@ public class Main extends SimpleApplication implements ActionListener {
 	}
 
 
-	private BlockTerrainControl blocks;
 	private Vector3f walkDirection = new Vector3f();
 	private PhysicsCharacter player;
 	private boolean left,right,up,down;
@@ -71,8 +70,8 @@ public class Main extends SimpleApplication implements ActionListener {
 		blockSettings.setMaterial(assetManager.loadMaterial("Materials/BlockyTexture.j3m"));
 		blockSettings.setWorldSize(new Vector3Int(50, 10, 50));
 		blockSettings.setViewDistance(200f);
-		
-		blocks = new BlockTerrainControl(blockSettings);
+
+		BlockTerrainControl blocks = new BlockTerrainControl(blockSettings);
 
 		this.cam.setFrustumFar(blockSettings.getViewDistance());
 
@@ -98,16 +97,16 @@ public class Main extends SimpleApplication implements ActionListener {
 		// Create a moon manually
 		int diameter = 16;
 		for (int z = 0; z < diameter; z++) {
-	        for (int y = 0; y < diameter; y++) {
-	            for (int x = 0; x < diameter; x++) {
-	                if (Math.sqrt((float) (x-diameter/2)*(x-diameter/2) + (y-diameter/2)*(y-diameter/2) + (z-diameter/2)*(z-diameter/2)) <= diameter/2) {
+			for (int y = 0; y < diameter; y++) {
+				for (int x = 0; x < diameter; x++) {
+					if (Math.sqrt((float) (x-diameter/2)*(x-diameter/2) + (y-diameter/2)*(y-diameter/2) + (z-diameter/2)*(z-diameter/2)) <= diameter/2) {
 						blocks.setBlock(new Vector3Int(x+50, y+50, z+50), DirtBlock.class);
-	                }
-	            }
-	        }
-	    }
+					}
+				}
+			}
+		}
 
-		
+
 		blocks.addListener(new IBlockTerrainListener() {
 
 			@Override
@@ -128,7 +127,7 @@ public class Main extends SimpleApplication implements ActionListener {
 		sun.setDirection(new Vector3f(-5, -4, -4).normalizeLocal());
 
 		rootNode.addLight(sun);
-		
+
 		AmbientLight al = new AmbientLight();
 		al.setColor(ColorRGBA.White.mult(.5f));
 		rootNode.addLight(al);
@@ -145,9 +144,9 @@ public class Main extends SimpleApplication implements ActionListener {
 		viewPort.addProcessor(fpp);
 
 		BitmapText hudText = new BitmapText(guiFont, false);
-		hudText.setSize(guiFont.getCharSet().getRenderedSize());      // font size
-		hudText.setColor(ColorRGBA.White);                             // font color
-		hudText.setText("+");             // the text
+		hudText.setSize(guiFont.getCharSet().getRenderedSize());
+		hudText.setColor(ColorRGBA.White);
+		hudText.setText("+");
 		hudText.setLocalTranslation(this.settings.getWidth() / 2 - hudText.getLineWidth()/2, this.settings.getHeight() / 2 + hudText.getLineHeight(), 0); // position
 
 		guiNode.attachChild(hudText);
@@ -203,7 +202,8 @@ public class Main extends SimpleApplication implements ActionListener {
 
 	@Override
 	public void simpleUpdate(float tpf) {
-		super.simpleUpdate(tpf); //To change body of generated methods, choose Tools | Templates.
+		super.simpleUpdate(tpf);
+
 		Vector3f camDir = cam.getDirection().clone().multLocal(0.6f);
 		Vector3f camLeft = cam.getLeft().clone().multLocal(0.4f);
 		walkDirection.set(0,0,0);
@@ -246,5 +246,5 @@ public class Main extends SimpleApplication implements ActionListener {
 			player.jump();
 		}
 	}
-	
+
 }
