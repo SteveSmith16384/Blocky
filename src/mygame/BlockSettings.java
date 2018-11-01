@@ -10,17 +10,14 @@ import mygame.util.Vector3Int;
  */
 public class BlockSettings {
 
-	private Vector3Int worldSize;
+	private Vector3Int worldSizeInChunks;
 	private Vector3Int chunkSize;
 	private Material material;
-	//private final Application application;
 	private float blockSize = 1f;
 	private float viewDistance = 200f;
 
-	public BlockSettings() {//Application application) {
-		//this.application = application;
+	public BlockSettings() {
 	}
-
 
 
 	public BlockSettings(Vector3Int chunkSize, Material material) {
@@ -44,17 +41,13 @@ public class BlockSettings {
 	public void setChunkSize(Vector3Int chunkSize) {
 		this.chunkSize = chunkSize;
 	}
-/*
-	public Application getApplication() {
-		return application;
-	}
-*/
+
 	public void setWorldSize(Vector3Int worldSize) {
-		this.worldSize = worldSize;
+		this.worldSizeInChunks = worldSize;
 	}
 
 	public Vector3Int getWorldSize() {
-		return worldSize;
+		return worldSizeInChunks;
 	}
 
 	public void setBlockSize(float blockSize) {

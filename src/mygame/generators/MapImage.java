@@ -16,8 +16,9 @@ public class MapImage {
 	 * Creates a 2D PNG Image from a two dimensional array.
 	 *
 	 * @param array
+	 * @throws IOException 
 	 */
-	public void visualize(double[][] array) {
+	public void visualize(float[][] array) throws IOException {
 		createImage(array, "generatedMap");
 	}
 
@@ -25,8 +26,9 @@ public class MapImage {
 	 * Creates an amount of 2D PNG Images from a two dimensional array.
 	 *
 	 * @param array
+	 * @throws IOException 
 	 */
-	public void visualize(double[][] array, int amount) {
+	public void visualize(float[][] array, int amount) throws IOException {
 		for (int i = 0; i < amount; i++) {
 			createImage(array, "generatedMap" + i);
 		}
@@ -36,8 +38,9 @@ public class MapImage {
 	 * Creates an amount of 2D PNG Images from a two dimensional array.
 	 *
 	 * @param array
+	 * @throws IOException 
 	 */
-	public void visualize(double[][] array, String filename) {
+	public void visualize(float[][] array, String filename) throws IOException {
 		createImage(array, filename);
 	}
 
@@ -46,9 +49,9 @@ public class MapImage {
 	 *
 	 * @param array
 	 * @param filename
+	 * @throws IOException 
 	 */
-	private void createImage(double[][] array, String filename) {
-
+	private void createImage(float[][] array, String filename) throws IOException {
 		System.out.println("Creating MapImage, please wait...");
 
 		int IMAGE_HEIGHT = array.length * PIXEL_SCALE;
@@ -57,9 +60,7 @@ public class MapImage {
 		System.out.println("Image Width: " + IMAGE_WIDTH + "px");
 		System.out.println("Image Height: " + IMAGE_HEIGHT + "px");
 
-		// Constructs a BufferedImage of one of the predefined image types.
 		BufferedImage bufferedImage = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
-		// Create a graphics which can be used to draw into the buffered image
 		Graphics2D g2d = bufferedImage.createGraphics();
 
 		// fill all the image with white
@@ -81,24 +82,18 @@ public class MapImage {
 					g2d.setColor(Color.BLUE);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
 
-				} else { //if (array[x][y] == 1) { // if value equals 1, fill with land
+				} else {
 					g2d.setColor(new Color((float)array[x][y], (float)array[x][y], (float)array[x][y]));
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
 				}
 			}
 		}
-		// Disposes of this graphics context and releases any system resources
-		// that it is using.
 		g2d.dispose();
 
 		System.out.printf("Saving MapImage to Disk as %s.png ... \n", filename);
 		// Save as PNG
 		File file = new File(filename + ".png");
-		try {
-			ImageIO.write(bufferedImage, "png", file);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		ImageIO.write(bufferedImage, "png", file);
 
 		System.out.println("Done! \n");
 	}

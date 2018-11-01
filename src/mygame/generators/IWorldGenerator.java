@@ -2,6 +2,6 @@ package mygame.generators;
 
 public interface IWorldGenerator {
 
-	public double[][] createWorld(int width, int height);
+	public float[][] createWorld(int width, int height);
 	
 }

@@ -5,9 +5,9 @@ import java.util.Random;
 public class SimplexNoiseGenerator implements IWorldGenerator {
 
 	private int OCTAVES;
-	double ROUGHNESS;
-	double SCALE;
-	Random r = new Random();
+	private double ROUGHNESS;
+	private double SCALE;
+	private Random r = new Random();
 
 
 	public SimplexNoiseGenerator(int octaves, double roughness, double scale) {
@@ -18,13 +18,13 @@ public class SimplexNoiseGenerator implements IWorldGenerator {
 
 
 	@Override
-	public double[][] createWorld(int width, int height) {
+	public float[][] createWorld(int width, int height) {
 		return generateOctavedSimplexNoise(width, height);
 	}
 
 	
-	private double[][] generateOctavedSimplexNoise(int width, int height) {
-		double[][] totalNoise = new double[width][height];
+	private float[][] generateOctavedSimplexNoise(int width, int height) {
+		float[][] totalNoise = new float[width][height];
 		double layerFrequency = SCALE;
 		double layerWeight = 1;
 		double weightSum = 0;

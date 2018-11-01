@@ -26,6 +26,7 @@ import com.jme3.post.FilterPostProcessor;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Node;
 import com.jme3.system.AppSettings;
+import com.jme3.terrain.heightmap.HeightMap;
 import com.jme3.terrain.heightmap.ImageBasedHeightMap;
 import com.jme3.water.WaterFilter;
 
@@ -90,7 +91,7 @@ public class Main extends SimpleApplication implements ActionListener {
 		blocks.registerBlock(new StoneBlock());
 		blocks.registerBlock(new DirtBlock());
 
-		ImageBasedHeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/test500x500.jpg").getImage(), .5f);
+		HeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/test500x500.jpg").getImage(), .5f);
 		heightmap.load();
 		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0), heightmap, StoneBlock.class);		
 

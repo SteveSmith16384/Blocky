@@ -145,6 +145,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 			indices.add(count + i);
 		}
 	}
+	
 
 	private void updateTextures(IBlockTextureLocator textureLocator, Face face) {
 		IBlockTexture texture = textureLocator.getFaceTexture(face);
@@ -154,6 +155,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 			textureCoords.add(getTextureCoords(x, y, texOffset[0], texOffset[1]));
 		}
 	}
+	
 
 	private static Vector2f getTextureCoords(int row, int column, int addX, int addY) {
 		float textureCount = 16;

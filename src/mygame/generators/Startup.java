@@ -3,14 +3,18 @@ package mygame.generators;
 public class Startup {
 
 	public static void main(String[] args) {
-		IWorldGenerator worldgen = new SimplexNoiseGenerator(3, 0.4f, 0.005f); // RandomPoint();
-		MapImage mi = new MapImage();
+		try {
+			//IWorldGenerator worldgen = new SimplexNoiseGenerator(3, 0.4f, 0.005f); // Good
+			IWorldGenerator worldgen = new SimplexNoiseGenerator(3, 0.7f, 0.007f); // Good
+			MapImage mi = new MapImage();
 
-		for (int i = 0; i < 5; i++) {
-			double[][] array = worldgen.createWorld(100, 100);
-			mi.visualize(array, "generatedMap" + i);
+			for (int i = 0; i < 5; i++) {
+				float[][] array = worldgen.createWorld(100, 100);
+				mi.visualize(array, "generatedMap" + i);
+			}
+		} catch (Exception ex) {
+			ex.printStackTrace();
 		}
-
 	}
-	
+
 }

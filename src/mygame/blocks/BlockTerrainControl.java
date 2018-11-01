@@ -41,7 +41,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		blockTypes = new HashMap<Class<? extends IBlock>, IBlock>();
 	}
 
-	
+
 	@Override
 	protected void controlUpdate(float tpf) {
 		if(needsUpdate){
@@ -90,17 +90,22 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		return chunks;
 	}
 
+	
 	void setNeedsUpdate(boolean needsUpdate) {
 		this.needsUpdate = needsUpdate;
 	}
+	
 
 	private void updateBlock(Vector3Int location, IBlock block){
+		//System.out.println("Changing block worldpos " + location);
+		
 		ChunkPosition chunkPosition = getValidChunk(location);
 		ChunkControl chunk = chunkPosition.chunk;
 		chunk.putBlock(chunkPosition.positionInChunk, block);
 		this.updateables.add(chunk);
 		this.needsUpdate = true;
 	}
+	
 
 	private ChunkPosition getValidChunk(Vector3Int location){
 		int x = location.getX();
@@ -143,12 +148,18 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 
 	}
 
-	public Vector3Int getPointedBlockLocation(Vector3f collisionLocation, boolean getNeighborLocation){
+
+	public Vector3Int getPointedBlockLocation(Vector3f collisionLocation, boolean getNeighborLocation) {
+		return getPointedBlockLocation(new Vector3Int(collisionLocation), getNeighborLocation);
+	}
+	
+	
+	public Vector3Int getPointedBlockLocation(Vector3Int collisionLocation, boolean getNeighborLocation) {
 		Vector3Int blockLocation = new Vector3Int(
 				(int) (collisionLocation.getX() / this.getSettings().getBlockSize()),
 				(int) (collisionLocation.getY() / this.getSettings().getBlockSize()),
 				(int) (collisionLocation.getZ() / this.getSettings().getBlockSize()));
-		
+
 		if((this.getBlock(blockLocation) != null) == getNeighborLocation){
 			if((collisionLocation.getX() % this.getSettings().getBlockSize()) == 0) {
 				blockLocation.subtractLocal(1, 0, 0);
@@ -163,9 +174,11 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		return blockLocation;
 	}
 
-	public void loadFromHeightMap(Vector3Int location,HeightMap heightmap, Class<? extends IBlock> blockClass){
+
+	public void loadFromHeightMap(Vector3Int location, HeightMap heightmap, Class<? extends IBlock> blockClass) {
 		setBlocksFromHeightmap(location, getHeightmapBlockData(heightmap.getScaledHeightMap(), heightmap.getSize()), blockClass);
 	}
+
 
 	private static int[][] getHeightmapBlockData(float[] heightmapData, int length){
 		int[][] data = new int[heightmapData.length / length][length];
@@ -174,14 +187,14 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		for(int i=0 ; i<heightmapData.length ; i++){
 			data[x][z] = (int) Math.round(heightmapData[i]);
 			x++;
-			if((x != 0) && ((x % length) == 0)){
+			if((x != 0) && ((x % length) == 0)) {
 				x = 0;
 				z++;
 			}
 		}
 		return data;
 	}
-	
+
 
 	public void setBlocksFromHeightmap(Vector3Int location, int[][] heightmap, Class<? extends IBlock> blockClass){
 		Vector3Int tmpLocation = new Vector3Int();
@@ -206,6 +219,23 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 			}
 		}
 	}
+
+
+	public void setBlockAreaBySphere(Vector3Int location, int diameter, Class<? extends IBlock> blockClass){
+		int rad = diameter/2;
+		Vector3Int tmpLocation = new Vector3Int();
+		for (int z = 0; z < diameter; z++) {
+			for (int y = 0; y < diameter; y++) {
+				for (int x = 0; x < diameter; x++) {
+					if (Math.sqrt((float) (x-diameter/2)*(x-diameter/2) + (y-diameter/2)*(y-diameter/2) + (z-diameter/2)*(z-diameter/2)) <= diameter/2) {
+						tmpLocation.set(location.getX() - rad + x, location.getY() - rad + y, location.getZ() - rad + z);
+						setBlock(tmpLocation, blockClass);
+					}
+				}
+			}
+		}
+	}
+
 
 	public void addListener(IBlockTerrainListener listener){
 		this.listeners.add(listener);
