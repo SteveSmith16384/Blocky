@@ -11,10 +11,11 @@ import javax.imageio.ImageIO;
 
 public class TextureSheetGenerator {
 
+	// todo - ensure final image is square!
 	public static void main(String[] args) {
 		try {
 			String[] tiles = {"mud.png", "lavarock.jpg", "yellowsun.jpg"};
-			new TextureSheetGenerator("test.png", 16, tiles);
+			new TextureSheetGenerator("newtilemap", 16, tiles);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
@@ -23,7 +24,7 @@ public class TextureSheetGenerator {
 
 	public TextureSheetGenerator(String filename, int tileSize, String[] tiles) throws IOException {
 		int IMAGE_HEIGHT = tileSize;
-		int IMAGE_WIDTH = tileSize * tiles.length * tileSize;
+		int IMAGE_WIDTH = tileSize * tiles.length;
 
 		BufferedImage bufferedImage = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d = bufferedImage.createGraphics();
@@ -33,7 +34,7 @@ public class TextureSheetGenerator {
 		g2d.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
 
 		for (int i=0 ; i<tiles.length ; i++) {
-			this.addImage(g2d, tiles[i], i, tileSize);
+			this.addImage(g2d, "assets/Textures/" + tiles[i], i, tileSize);
 		}
 		g2d.dispose();
 
