@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 public class MapImage {
 
-	private final int PIXEL_SCALE = 10;
+	private final int PIXEL_SCALE = 1;
 
 	/**
 	 * Creates a 2D PNG Image from a two dimensional array.
@@ -78,14 +78,14 @@ public class MapImage {
 				} else if (array[x][y] > 1) {
 					array[x][y] = 1;
 				}
-				if (array[x][y] == 0) { // if value equals 0, fill with water
+				/*if (array[x][y] == 0) { // if value equals 0, fill with water
 					g2d.setColor(Color.BLUE);
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
 
-				} else {
+				} else {*/
 					g2d.setColor(new Color((float)array[x][y], (float)array[x][y], (float)array[x][y]));
 					g2d.fillRect(y * PIXEL_SCALE, x * PIXEL_SCALE, PIXEL_SCALE, PIXEL_SCALE);
-				}
+				//}
 			}
 		}
 		g2d.dispose();

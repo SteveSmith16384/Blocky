@@ -1,6 +1,6 @@
 package mygame.generators;
 
-public class Startup {
+public class HeightMapGenerator {
 
 	public static void main(String[] args) {
 		try {
@@ -9,7 +9,7 @@ public class Startup {
 			MapImage mi = new MapImage();
 
 			for (int i = 0; i < 5; i++) {
-				float[][] array = worldgen.createWorld(100, 100);
+				float[][] array = worldgen.createWorld(500, 500);
 				mi.visualize(array, "generatedMap" + i);
 			}
 		} catch (Exception ex) {

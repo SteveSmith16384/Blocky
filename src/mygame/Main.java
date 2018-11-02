@@ -1,6 +1,7 @@
 package mygame;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.app.state.VideoRecorderAppState;
 import com.jme3.asset.plugins.FileLocator;
 import com.jme3.bullet.BulletAppState;
 import com.jme3.bullet.PhysicsSpace;
@@ -43,6 +44,8 @@ import mygame.util.Vector3Int;
  */
 public class Main extends SimpleApplication implements ActionListener {
 
+	private static final boolean RECORD_VID = false;
+	
 	public static void main(String[] args) {
 		Main app = new Main();
 		AppSettings settings = new AppSettings(true);
@@ -91,7 +94,7 @@ public class Main extends SimpleApplication implements ActionListener {
 		blocks.registerBlock(new StoneBlock());
 		blocks.registerBlock(new DirtBlock());
 
-		HeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/test500x500.jpg").getImage(), .5f);
+		HeightMap heightmap = new ImageBasedHeightMap(assetManager.loadTexture("Textures/map1.png").getImage(), .2f);
 		heightmap.load();
 		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0), heightmap, StoneBlock.class);		
 
@@ -106,7 +109,6 @@ public class Main extends SimpleApplication implements ActionListener {
 				}
 			}
 		}
-
 
 		blocks.addListener(new IBlockTerrainListener() {
 
@@ -185,6 +187,12 @@ public class Main extends SimpleApplication implements ActionListener {
 		inputManager.addMapping("toggle", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
 		setupKeys();
 
+		if (RECORD_VID) {
+			System.out.println("Recording video");
+			VideoRecorderAppState video_recorder = new VideoRecorderAppState();
+			stateManager.attach(video_recorder);
+		}
+		
 	}
 
 	private void setupKeys() {
