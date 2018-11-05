@@ -42,11 +42,11 @@ public class BlockSettings {
 		this.chunkSize = chunkSize;
 	}
 
-	public void setWorldSize(Vector3Int worldSize) {
+	public void setWorldSizeInChunks(Vector3Int worldSize) {
 		this.worldSizeInChunks = worldSize;
 	}
 
-	public Vector3Int getWorldSize() {
+	public Vector3Int getWorldSizeInChunks() {
 		return worldSizeInChunks;
 	}
 

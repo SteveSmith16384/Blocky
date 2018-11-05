@@ -15,31 +15,31 @@ public class TextureSheetGenerator {
 	public static void main(String[] args) {
 		try {
 			String[] tiles = {"mud.png", "lavarock.jpg", "yellowsun.jpg"};
-			new TextureSheetGenerator("newtilemap", 16, tiles);
+			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 1024, 16, "newtilemap");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 
-	public TextureSheetGenerator(String filename, int tileSize, String[] tiles) throws IOException {
-		int IMAGE_HEIGHT = tileSize;
-		int IMAGE_WIDTH = tileSize * tiles.length;
-
-		BufferedImage bufferedImage = new BufferedImage(IMAGE_WIDTH, IMAGE_HEIGHT, BufferedImage.TYPE_INT_RGB);
+	public void generateTextureSheet(String path, String[] tiles, int imageSize, int tileSize, String outputFilename) throws IOException {
+		if (!path.endsWith("\\") && !path.endsWith("/")) {
+			path = path + "/";
+		}
+		BufferedImage bufferedImage = new BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_RGB);
 		Graphics2D g2d = bufferedImage.createGraphics();
 
 		// fill all the image with white
 		g2d.setColor(Color.white);
-		g2d.fillRect(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
+		g2d.fillRect(0, 0, imageSize, imageSize);
 
 		for (int i=0 ; i<tiles.length ; i++) {
-			this.addImage(g2d, "assets/Textures/" + tiles[i], i, tileSize);
+			this.addImage(g2d, path + tiles[i], i, tileSize);
 		}
 		g2d.dispose();
 
 		// Save as PNG
-		File file = new File(filename + ".png");
+		File file = new File(path + outputFilename + ".png");
 		ImageIO.write(bufferedImage, "png", file);
 	}
 

@@ -25,7 +25,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 
 	private final ChunkControl[][][] chunks;
 	private final Map<Class<? extends IBlock>, IBlock> blockTypes;
-	private final Vector3Int worldSize;
+	private final Vector3Int worldSizeInChunks;
 	private final Vector3Int chunkSize;
 	private final BlockSettings settings;
 	private final Set<ChunkControl> updateables = new HashSet<ChunkControl>();
@@ -34,10 +34,10 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	private boolean needsUpdate = false;
 
 	public BlockTerrainControl(BlockSettings settings) {
-		this.worldSize = settings.getWorldSize();
+		this.worldSizeInChunks = settings.getWorldSizeInChunks();
 		this.chunkSize = settings.getChunkSize();
 		this.settings = settings;
-		this.chunks = new ChunkControl[worldSize.getX()][worldSize.getY()][worldSize.getZ()];
+		this.chunks = new ChunkControl[worldSizeInChunks.getX()][worldSizeInChunks.getY()][worldSizeInChunks.getZ()];
 		blockTypes = new HashMap<Class<? extends IBlock>, IBlock>();
 	}
 
@@ -65,8 +65,12 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		this.blockTypes.put(block.getClass(), block);
 	}
 
-	public void setBlock(Vector3Int location, Class<? extends IBlock> blockType){
-		this.updateBlock(location, this.blockTypes.get(blockType));
+	public void setBlock(Vector3Int location, Class<? extends IBlock> blockType) {
+		IBlock block = this.blockTypes.get(blockType);
+		if (block == null) {
+			throw new RuntimeException("Block " + blockType + " not registered");
+		}
+		this.updateBlock(location, block);
 	}
 
 	public void removeBlock(Vector3Int location){
@@ -77,11 +81,11 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		ChunkPosition chunkPosition = getValidChunk(location);
 		return chunkPosition.chunk.getBlock(chunkPosition.positionInChunk);
 	}
-
+/*
 	public Vector3Int getWorldSize() {
 		return worldSize;
 	}
-
+*/
 	public BlockSettings getSettings() {
 		return settings;
 	}
