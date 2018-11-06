@@ -15,6 +15,7 @@ public class BlockSettings {
 	private Material material;
 	private float blockSize = 1f;
 	private float viewDistance = 200f;
+	public int texturesPerSheet = 16;
 
 	public BlockSettings() {
 	}

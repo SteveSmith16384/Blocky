@@ -20,6 +20,7 @@ import mygame.util.Vector3Int;
  */
 public class FaceCullMeshGenerator implements IMeshGenerator {
 
+	public static int texturesPerSheet = 16;
 	private final List<Vector3f> verts = new ArrayList<Vector3f>();
 	private final List<Integer> indices = new ArrayList<Integer>();
 	private final List<Float> normals = new ArrayList<Float>();
@@ -35,6 +36,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		this.blockSize = blockSize;
 		this.location = location;
 	}
+
 
 	public Mesh generateMesh() {
 		for (int i = 0; i < size.getX(); i++) {
@@ -99,7 +101,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		m.setStatic();
 		return m;
 	}
-	
+
 
 	private boolean shouldAddFace(Vector3Int position, Face face) {
 		Vector3Int offset = position.add(face.getOffset());
@@ -145,7 +147,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 			indices.add(count + i);
 		}
 	}
-	
+
 
 	private void updateTextures(IBlockTextureLocator textureLocator, Face face) {
 		IBlockTexture texture = textureLocator.getFaceTexture(face);
@@ -155,19 +157,37 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 			textureCoords.add(getTextureCoords(x, y, texOffset[0], texOffset[1]));
 		}
 	}
-	
+
 
 	private static Vector2f getTextureCoords(int row, int column, int addX, int addY) {
-		float textureCount = 16;
-		float textureUnit = 1 / textureCount;
+		float textureUnit = 1f / texturesPerSheet;
 		float x = (((column + addX) * textureUnit));
 		float y = ((((-1 * row) + (addY - 1)) * textureUnit) + 1);
-		return new Vector2f(x, y);
+
+		// Inset textures, otherwise get smudging
+		float inset = 0.02f;
+		if (addX == 0) {
+			x = x +inset;
+		} else {
+			x = x - inset;
+		}
+
+		if (addY == 0) {
+			y = y + inset;
+		} else {
+			y = y - inset;
+		}
+
+		Vector2f v = new Vector2f(x, y);
+
+		System.out.println("row:" + row + "  column:" + column + "  addX:" + addX + "  addY:" + addY + "  Coords: " + v);
+		return v;
 	}
+
 
 	private static int[] makeArray(List<Integer> indices) {
 		int[] array = new int[indices.size()];
-		for(int i=0;i<array.length; i++){
+		for (int i=0 ; i<array.length ; i++) {
 			array[i] = indices.get(i);
 		}
 		return array;
@@ -175,7 +195,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 
 	private static float[] makeFloatArray(List<Float> normals) {
 		float[] array = new float[normals.size()];
-		for(int i=0;i<array.length; i++){
+		for (int i=0 ; i<array.length ; i++) {
 			array[i] = normals.get(i);
 		}
 		return array;

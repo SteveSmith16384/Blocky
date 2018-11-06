@@ -15,10 +15,12 @@ import com.jme3.scene.control.AbstractControl;
 import com.jme3.terrain.heightmap.HeightMap;
 
 import mygame.BlockSettings;
+import mygame.blocks.meshs.FaceCullMeshGenerator;
 import mygame.util.Vector3Int;
 
 /**
- *
+ * You get a null mesh error if the only block is at 0, 0, 0
+ *  
  * @author bogdan
  */
 public class BlockTerrainControl extends AbstractControl implements Savable {
@@ -39,6 +41,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		this.settings = settings;
 		this.chunks = new ChunkControl[worldSizeInChunks.getX()][worldSizeInChunks.getY()][worldSizeInChunks.getZ()];
 		blockTypes = new HashMap<Class<? extends IBlock>, IBlock>();
+		FaceCullMeshGenerator.texturesPerSheet = settings.texturesPerSheet;
 	}
 
 
@@ -81,11 +84,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		ChunkPosition chunkPosition = getValidChunk(location);
 		return chunkPosition.chunk.getBlock(chunkPosition.positionInChunk);
 	}
-/*
-	public Vector3Int getWorldSize() {
-		return worldSize;
-	}
-*/
+
 	public BlockSettings getSettings() {
 		return settings;
 	}
@@ -101,8 +100,6 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	
 
 	private void updateBlock(Vector3Int location, IBlock block){
-		//System.out.println("Changing block worldpos " + location);
-		
 		ChunkPosition chunkPosition = getValidChunk(location);
 		ChunkControl chunk = chunkPosition.chunk;
 		chunk.putBlock(chunkPosition.positionInChunk, block);
@@ -163,7 +160,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 				(int) (collisionLocation.getX() / this.getSettings().getBlockSize()),
 				(int) (collisionLocation.getY() / this.getSettings().getBlockSize()),
 				(int) (collisionLocation.getZ() / this.getSettings().getBlockSize()));
-
+/*
 		if((this.getBlock(blockLocation) != null) == getNeighborLocation){
 			if((collisionLocation.getX() % this.getSettings().getBlockSize()) == 0) {
 				blockLocation.subtractLocal(1, 0, 0);
@@ -175,6 +172,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 				blockLocation.subtractLocal(0, 0, 1);
 			}
 		}
+		*/
 		return blockLocation;
 	}
 
