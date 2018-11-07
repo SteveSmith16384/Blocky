@@ -71,7 +71,8 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	public void setBlock(Vector3Int location, Class<? extends IBlock> blockType) {
 		IBlock block = this.blockTypes.get(blockType);
 		if (block == null) {
-			throw new RuntimeException("Block " + blockType + " not registered");
+			//throw new RuntimeException("Block " + blockType + " not registered");
+			//this.blockTypes.put(arg0, arg1)
 		}
 		this.updateBlock(location, block);
 	}

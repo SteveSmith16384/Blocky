@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 
 public class TextureSheetGenerator {
 
-	// todo - ensure final image is square!
 	public static void main(String[] args) {
 		try {
 			String[] tiles = {"mud.png", "lavarock.jpg", "yellowsun.jpg"};
@@ -26,11 +25,11 @@ public class TextureSheetGenerator {
 		if (!path.endsWith("\\") && !path.endsWith("/")) {
 			path = path + "/";
 		}
-		BufferedImage bufferedImage = new BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_RGB);
+		BufferedImage bufferedImage = new BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = bufferedImage.createGraphics();
 
 		// fill all the image with white
-		g2d.setColor(Color.white);
+		g2d.setColor(new Color(1f, 1f, 1f, 0f)); // Transparent background!
 		g2d.fillRect(0, 0, imageSize, imageSize);
 
 		for (int i=0 ; i<tiles.length ; i++) {
@@ -41,17 +40,14 @@ public class TextureSheetGenerator {
 		// Save as PNG
 		File file = new File(path + outputFilename + ".png");
 		ImageIO.write(bufferedImage, "png", file);
+		
+		System.out.println(outputFilename + ".png created.");
 	}
 
 
 	private void addImage(Graphics2D g2d, String filename, int num, int tileSize) throws IOException {
 		BufferedImage image = ImageIO.read(new File(filename));
-		//if (image.getWidth() != tileSize || image.getHeight() != tileSize) {
-		//Image i = image.getScaledInstance(tileSize, tileSize, BufferedImage.SCALE_DEFAULT);
 		g2d.drawImage(image, tileSize*num, 0, tileSize, tileSize, null);
-		//} else {
-
-		//}
-
 	}
+	
 }
