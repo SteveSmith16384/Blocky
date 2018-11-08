@@ -13,7 +13,7 @@ public class TextureSheetGenerator {
 
 	public static void main(String[] args) {
 		try {
-			String[] tiles = {"mud.png", "lavarock.jpg", "yellowsun.jpg"};
+			String[][] tiles = {{"mud.png", "lavarock.jpg", "yellowsun.jpg"}};
 			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 1024, 16, "newtilemap");
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -21,7 +21,7 @@ public class TextureSheetGenerator {
 	}
 
 
-	public void generateTextureSheet(String path, String[] tiles, int imageSize, int tileSize, String outputFilename) throws IOException {
+	public void generateTextureSheet(String path, String[][] tiles, int imageSize, int tileSize, String outputFilename) throws IOException {
 		if (!path.endsWith("\\") && !path.endsWith("/")) {
 			path = path + "/";
 		}
@@ -33,21 +33,29 @@ public class TextureSheetGenerator {
 		g2d.fillRect(0, 0, imageSize, imageSize);
 
 		for (int i=0 ; i<tiles.length ; i++) {
-			this.addImage(g2d, path + tiles[i], i, tileSize);
+			for (int j=0 ; j<tiles[0].length ; j++) {
+				try {
+					if (tiles[i][j] != null) {
+						this.addImage(g2d, path + tiles[i][j], j, i, tileSize);
+					}
+				} catch (ArrayIndexOutOfBoundsException ex) {
+
+				}
+			}
 		}
 		g2d.dispose();
 
 		// Save as PNG
 		File file = new File(path + outputFilename + ".png");
 		ImageIO.write(bufferedImage, "png", file);
-		
+
 		System.out.println(outputFilename + ".png created.");
 	}
 
 
-	private void addImage(Graphics2D g2d, String filename, int num, int tileSize) throws IOException {
+	private void addImage(Graphics2D g2d, String filename, int x, int y, int tileSize) throws IOException {
 		BufferedImage image = ImageIO.read(new File(filename));
-		g2d.drawImage(image, tileSize*num, 0, tileSize, tileSize, null);
+		g2d.drawImage(image, tileSize*x, tileSize*y, tileSize, tileSize, null);
 	}
-	
+
 }
