@@ -14,17 +14,18 @@ public class TextureSheetGenerator {
 	public static void main(String[] args) {
 		try {
 			String[][] tiles = {{"mud.png", "lavarock.jpg", "yellowsun.jpg"}};
-			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 1024, 16, "newtilemap");
+			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 8, 16, "newtilemap");
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 
-	public void generateTextureSheet(String path, String[][] tiles, int imageSize, int tileSize, String outputFilename) throws IOException {
+	public void generateTextureSheet(String path, String[][] tiles, int tilesAcrossDown, int tileSize, String outputFilename) throws IOException {
 		if (!path.endsWith("\\") && !path.endsWith("/")) {
 			path = path + "/";
 		}
+		int imageSize = tilesAcrossDown * tileSize;
 		BufferedImage bufferedImage = new BufferedImage(imageSize, imageSize, BufferedImage.TYPE_INT_ARGB);
 		Graphics2D g2d = bufferedImage.createGraphics();
 

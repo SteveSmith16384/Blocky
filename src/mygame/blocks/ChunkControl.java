@@ -11,6 +11,7 @@ import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
 import com.jme3.scene.Spatial;
 import com.jme3.scene.control.AbstractControl;
+import com.jme3.scene.shape.Box;
 
 import mygame.blocks.meshs.FaceCullMeshGenerator;
 import mygame.blocks.meshs.IMeshGenerator;
@@ -32,9 +33,9 @@ public class ChunkControl extends AbstractControl implements Savable {
 	//private final BlockTerrainControl terrain;
 	private final Vector3Int location;
 	private final IMeshGenerator generator;
+	public boolean generatedProperMesh = false;
 
 	public ChunkControl(BlockTerrainControl terrain, Vector3Int location) {
-		//this.terrain = terrain;
 		this.location = location;
 		this.size = terrain.getSettings().getChunkSize();
 		this.blockSize = terrain.getSettings().getBlockSize();
@@ -42,13 +43,13 @@ public class ChunkControl extends AbstractControl implements Savable {
 
 		Material material = terrain.getSettings().getMaterial();
 
-		material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha); // scs new
-		material.setTransparent(true); // scs new
-
+		material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+		material.setTransparent(true);
 		this.geom = new Geometry("terrain " + location);
 		geom.setMaterial(material);
+		geom.setQueueBucket(Bucket.Transparent);
 		
-		geom.setQueueBucket(Bucket.Transparent); // scs new
+		geom.setMesh(new Box(1, 1, 1)); // dummy mesh for now.  scs new
 		
 		generator = new FaceCullMeshGenerator(size, blockSize, location, blocks);
 

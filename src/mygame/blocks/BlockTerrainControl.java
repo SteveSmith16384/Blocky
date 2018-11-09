@@ -47,10 +47,10 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 
 	@Override
 	protected void controlUpdate(float tpf) {
-		if(needsUpdate){
-			for(ChunkControl c : this.updateables){
+		if (needsUpdate) {
+			for (ChunkControl c : this.updateables) {
 				c.update(tpf);
-				for(IBlockTerrainListener l : listeners){
+				for (IBlockTerrainListener l : listeners) {
 					l.onChunkUpdated(c);
 				}
 			}
@@ -71,7 +71,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	public void setBlock(Vector3Int location, Class<? extends IBlock> blockType) {
 		IBlock block = this.blockTypes.get(blockType);
 		if (block == null) {
-			//throw new RuntimeException("Block " + blockType + " not registered");
+			throw new RuntimeException("Block " + blockType + " not registered");
 			//this.blockTypes.put(arg0, arg1)
 		}
 		this.updateBlock(location, block);
@@ -94,11 +94,11 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		return chunks;
 	}
 
-	
+
 	void setNeedsUpdate(boolean needsUpdate) {
 		this.needsUpdate = needsUpdate;
 	}
-	
+
 
 	private void updateBlock(Vector3Int location, IBlock block){
 		ChunkPosition chunkPosition = getValidChunk(location);
@@ -107,7 +107,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		this.updateables.add(chunk);
 		this.needsUpdate = true;
 	}
-	
+
 
 	private ChunkPosition getValidChunk(Vector3Int location){
 		int x = location.getX();
@@ -151,17 +151,17 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	}
 
 
-	public Vector3Int getPointedBlockLocation(Vector3f collisionLocation, boolean getNeighborLocation) {
-		return getPointedBlockLocation(new Vector3Int(collisionLocation), getNeighborLocation);
+	public Vector3Int getPointedBlockLocation(Vector3f collisionLocation) { //, boolean getNeighborLocation) {
+		return getPointedBlockLocation(new Vector3Int(collisionLocation)); //, getNeighborLocation);
 	}
-	
-	
-	public Vector3Int getPointedBlockLocation(Vector3Int collisionLocation, boolean getNeighborLocation) {
+
+
+	public Vector3Int getPointedBlockLocation(Vector3Int collisionLocation) {//, boolean getNeighborLocation) {
 		Vector3Int blockLocation = new Vector3Int(
 				(int) (collisionLocation.getX() / this.getSettings().getBlockSize()),
 				(int) (collisionLocation.getY() / this.getSettings().getBlockSize()),
 				(int) (collisionLocation.getZ() / this.getSettings().getBlockSize()));
-/*
+		/*
 		if((this.getBlock(blockLocation) != null) == getNeighborLocation){
 			if((collisionLocation.getX() % this.getSettings().getBlockSize()) == 0) {
 				blockLocation.subtractLocal(1, 0, 0);
@@ -173,7 +173,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 				blockLocation.subtractLocal(0, 0, 1);
 			}
 		}
-		*/
+		 */
 		return blockLocation;
 	}
 
@@ -210,6 +210,20 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 			}
 		}
 	}
+
+
+	public void setBlockHeightsFromArray(Vector3Int location, int[][] heights, Class<? extends IBlock> blockClass){
+		Vector3Int tmpLocation = new Vector3Int();
+		for(int x=0 ; x<heights.length ; x++){
+			for(int z=0 ; z<heights[0].length ; z++){
+				for(int y=0;y<heights[x][z];y++){
+					tmpLocation.set(location.getX() + x, location.getY() + y, location.getZ() + z);
+					setBlock(tmpLocation, blockClass);
+				}
+			}
+		}
+	}
+
 
 	public void setBlockArea(Vector3Int location, Vector3Int size, Class<? extends IBlock> blockClass){
 		Vector3Int tmpLocation = new Vector3Int();
