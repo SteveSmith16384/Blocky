@@ -165,9 +165,9 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		float y = ((((-1 * row) + (addY - 1)) * textureUnit) + 1);
 
 		// Inset textures, otherwise get smudging
-		float inset = 0.05f; // 0.02f;
+		/*float inset = 0.03f; // 0.02f;
 		if (addX == 0) {
-			x = x +inset;
+			x = x + inset;
 		} else {
 			x = x - inset;
 		}
@@ -177,10 +177,11 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		} else {
 			y = y - inset;
 		}
-
+*/
 		Vector2f v = new Vector2f(x, y);
 
-		//System.out.println("row:" + row + "  column:" + column + "  addX:" + addX + "  addY:" + addY + "  Coords: " + v);
+		System.out.println("row:" + row + "  column:" + column + "  addX:" + addX + "  addY:" + addY + "  Coords: " + v);
+		
 		return v;
 	}
 
