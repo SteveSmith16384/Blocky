@@ -177,7 +177,7 @@ public class Main extends SimpleApplication implements ActionListener {
 				CollisionResult result = results.getClosestCollision();
 				if (result != null) {
 					Vector3f position = result.getContactPoint();
-					Vector3Int blockPosition = blocks.getPointedBlockLocation(position, false);
+					Vector3Int blockPosition = blocks.getPointedBlockLocation(position);//, false);
 					blocks.removeBlock(blockPosition);
 				}
 
