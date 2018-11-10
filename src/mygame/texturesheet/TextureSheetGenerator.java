@@ -14,14 +14,14 @@ public class TextureSheetGenerator {
 	public static void main(String[] args) {
 		try {
 			String[][] tiles = {{"mud.png", "lavarock.jpg", "yellowsun.jpg"}};
-			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 8, 16, "newtilemap");
+			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 8, 16, "newtilemap", 0);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 
-	public void generateTextureSheet(String path, String[][] tiles, int tilesAcrossDown, int tileSize, String outputFilename) throws IOException {
+	public void generateTextureSheet(String path, String[][] tiles, int tilesAcrossDown, int tileSize, String outputFilename, int inset) throws IOException {
 		if (!path.endsWith("\\") && !path.endsWith("/")) {
 			path = path + "/";
 		}
@@ -37,7 +37,7 @@ public class TextureSheetGenerator {
 			for (int j=0 ; j<tiles[0].length ; j++) {
 				try {
 					if (tiles[i][j] != null) {
-						this.addImage(g2d, path + tiles[i][j], j, i, tileSize);
+						this.addImage(g2d, path + tiles[i][j], j, i, tileSize, inset);
 					}
 				} catch (ArrayIndexOutOfBoundsException ex) {
 
@@ -54,9 +54,12 @@ public class TextureSheetGenerator {
 	}
 
 
-	private void addImage(Graphics2D g2d, String filename, int x, int y, int tileSize) throws IOException {
+	private void addImage(Graphics2D g2d, String filename, int tileX, int tileY, int tileSize, int inset) throws IOException {
 		BufferedImage image = ImageIO.read(new File(filename));
-		g2d.drawImage(image, tileSize*x, tileSize*y, tileSize, tileSize, null);
+		g2d.drawImage(image, tileSize*tileX, tileSize*tileY, tileSize, tileSize, null);
+		if (inset > 0) {
+			g2d.drawImage(image, (tileSize*tileX)+inset, (tileSize*tileY)+inset, tileSize-(inset*2), tileSize-(inset*2), null);
+		}
 	}
 
 }
