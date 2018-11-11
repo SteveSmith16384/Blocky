@@ -165,7 +165,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		float y = ((((-1 * row) + (addY - 1)) * textureUnit) + 1);
 
 		// Inset textures, otherwise get smudging
-		float inset = 0.008f; // 0.015f; // 0.02f;
+		float inset = textureUnit/8f;// 0.008f; // 0.015f; // 0.02f; todo - add as param
 		if (addX == 0) {
 			x = x + inset;
 		} else {
