@@ -36,7 +36,9 @@ public class TextureSheetGenerator {
 			g2d.setColor(new Color(0f, 0f, 1f, 1f)); // Transparent background!
 		}
 		g2d.fillRect(0, 0, imageSize, imageSize);
-
+		
+		int num = 0;
+		
 		for (int i=0 ; i<tiles.length ; i++) {
 			for (int j=0 ; j<tiles[0].length ; j++) {
 				try {
@@ -44,12 +46,29 @@ public class TextureSheetGenerator {
 						this.addImage(g2d, path + tiles[i][j], j, i, tileSize, inset);
 					}
 				} catch (ArrayIndexOutOfBoundsException ex) {
-
+					// Do nothing
 				}
+				
+				// Draw number for debugging
+				//g2d.setColor(new Color(1f, 1f, 1f, 1f)); // Transparent background!
+				//g2d.drawString(""+num, j*tileSize, (i+tileSize) + (tileSize/2));
+				//num++;
 			}
 		}
-		g2d.dispose();
 
+		// Draw number for debugging
+		g2d.setColor(new Color(1f, 1f, 1f, 1f)); // Transparent background!
+		for (int i=0 ; i<tilesAcrossDown ; i++) {
+			for (int j=0 ; j<tilesAcrossDown ; j++) {
+				int x = (j*tileSize) + (tileSize/2);
+				int y = (i*tileSize) + (tileSize/2);
+				g2d.drawString(""+num, x, y);
+				num++;
+			}
+		}
+		
+		g2d.dispose();
+		
 		// Save as PNG
 		File file = new File(path + outputFilename + ".png");
 		ImageIO.write(bufferedImage, "png", file);
