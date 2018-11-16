@@ -8,7 +8,7 @@ public class AbstractBlock implements IBlock {
 
 	private final IBlockTextureLocator blockTextureLocator;
 
-	public AbstractBlock(int texX, int textY) {
+	public AbstractBlock(int texX, int textY) { // origin is top-left
 		blockTextureLocator = new SimpleBlockTexture(texX, textY);
 	}
 

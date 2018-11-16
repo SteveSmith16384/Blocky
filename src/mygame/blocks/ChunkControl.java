@@ -6,6 +6,7 @@ import com.jme3.material.RenderState.BlendMode;
 import com.jme3.renderer.RenderManager;
 import com.jme3.renderer.ViewPort;
 import com.jme3.renderer.queue.RenderQueue.Bucket;
+import com.jme3.renderer.queue.RenderQueue.ShadowMode;
 import com.jme3.scene.Geometry;
 import com.jme3.scene.Mesh;
 import com.jme3.scene.Node;
@@ -49,9 +50,11 @@ public class ChunkControl extends AbstractControl implements Savable {
 		geom.setMaterial(material);
 		geom.setQueueBucket(Bucket.Transparent);
 		
-		geom.setMesh(new Box(1, 1, 1)); // dummy mesh for now.  scs new
+		geom.setMesh(new Box(1, 1, 1)); // dummy mesh for now.
+		geom.setShadowMode(ShadowMode.CastAndReceive);
 		
 		generator = new FaceCullMeshGenerator(size, blockSize, location, blocks);
+
 
 	}
 	

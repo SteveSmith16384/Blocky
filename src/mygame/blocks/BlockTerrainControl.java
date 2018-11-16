@@ -71,8 +71,14 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	public void setBlock(Vector3Int location, Class<? extends IBlock> blockType) {
 		IBlock block = this.blockTypes.get(blockType);
 		if (block == null) {
-			throw new RuntimeException("Block " + blockType + " not registered");
+			//throw new RuntimeException("Block " + blockType + " not registered");
 			//this.blockTypes.put(arg0, arg1)
+			try {
+				block = (IBlock)blockType.newInstance();
+				this.blockTypes.put(blockType, block);
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException("Unable to create " + blockType.getName(), e);
+			}
 		}
 		this.updateBlock(location, block);
 	}
@@ -139,7 +145,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		return new ChunkPosition(chunk, new Vector3Int(x, y, z));
 	}
 
-	private static final class ChunkPosition{
+	private static final class ChunkPosition {
 		final ChunkControl chunk;
 		final Vector3Int positionInChunk;
 
@@ -183,7 +189,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	}
 
 
-	private static int[][] getHeightmapBlockData(float[] heightmapData, int length){
+	private static int[][] getHeightmapBlockData(float[] heightmapData, int length) {
 		int[][] data = new int[heightmapData.length / length][length];
 		int x = 0;
 		int z = 0;

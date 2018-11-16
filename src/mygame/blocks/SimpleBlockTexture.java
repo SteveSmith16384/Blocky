@@ -11,9 +11,9 @@ public class SimpleBlockTexture implements IBlockTexture, IBlockTextureLocator {
     private final int row;
     private final int column;
 
-    public SimpleBlockTexture(int row, int column) {
-        this.row = row;
+    public SimpleBlockTexture(int column, int row) {
         this.column = column;
+        this.row = row;
     }
 
     public int getColumn() {

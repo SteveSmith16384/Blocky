@@ -14,14 +14,14 @@ public class TextureSheetGenerator {
 	public static void main(String[] args) {
 		try {
 			String[][] tiles = {{"mud.png", "lavarock.jpg", "yellowsun.jpg"}};
-			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 8, 16, "newtilemap", 0);
+			new TextureSheetGenerator().generateTextureSheet("assets/Textures", tiles, 8, 16, "newtilemap", 0, true);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 
-	public void generateTextureSheet(String path, String[][] tiles, int tilesAcrossDown, int tileSize, String outputFilename, int inset) throws IOException {
+	public void generateTextureSheet(String path, String[][] tiles, int tilesAcrossDown, int tileSize, String outputFilename, int inset, boolean transpBack) throws IOException {
 		if (!path.endsWith("\\") && !path.endsWith("/")) {
 			path = path + "/";
 		}
@@ -30,7 +30,11 @@ public class TextureSheetGenerator {
 		Graphics2D g2d = bufferedImage.createGraphics();
 
 		// fill all the image with white
-		g2d.setColor(new Color(1f, 1f, 1f, 0f)); // Transparent background!
+		if (transpBack) {
+			g2d.setColor(new Color(1f, 1f, 1f, 0f)); // Transparent background!
+		} else {
+			g2d.setColor(new Color(0f, 0f, 1f, 1f)); // Transparent background!
+		}
 		g2d.fillRect(0, 0, imageSize, imageSize);
 
 		for (int i=0 ; i<tiles.length ; i++) {

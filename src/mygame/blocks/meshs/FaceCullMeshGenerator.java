@@ -162,10 +162,10 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 	private static Vector2f getTextureCoords(int row, int column, int addX, int addY) {
 		float textureUnit = 1f / texturesPerSheet;
 		float x = (((column + addX) * textureUnit));
-		float y = ((((-1 * row) + (addY - 1)) * textureUnit) + 1);
+		float y = ((((-1 * row) + (addY - 1)) * textureUnit) + 1); // Origin is bottom left!
 
 		// Inset textures, otherwise get smudging
-		float inset = textureUnit/8f;// 0.008f; // 0.015f; // 0.02f; todo - add as param
+		float inset = textureUnit/8f;// 0.008f; // 0.015f; // 0.02f;
 		if (addX == 0) {
 			x = x + inset;
 		} else {
@@ -179,9 +179,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		}
 
 		Vector2f v = new Vector2f(x, y);
-
 		//System.out.println("row:" + row + "  column:" + column + "  addX:" + addX + "  addY:" + addY + "  Coords: " + v);
-		
 		return v;
 	}
 
@@ -193,6 +191,7 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		}
 		return array;
 	}
+	
 
 	private static float[] makeFloatArray(List<Float> normals) {
 		float[] array = new float[normals.size()];
@@ -201,4 +200,6 @@ public class FaceCullMeshGenerator implements IMeshGenerator {
 		}
 		return array;
 	}
+	
+	
 }
