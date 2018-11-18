@@ -17,11 +17,11 @@ public class SimpleBlockTexture implements IBlockTexture, IBlockTextureLocator {
     }
 
     public int getColumn() {
-        return column;
+        return row;//column;
     }
 
     public int getRow() {
-        return row;
+        return column;//row;
     }
 
     public IBlockTexture getFaceTexture(Face face) {
