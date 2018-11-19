@@ -49,15 +49,15 @@ public class ChunkControl extends AbstractControl implements Savable {
 		this.geom = new Geometry("terrain " + location);
 		geom.setMaterial(material);
 		geom.setQueueBucket(Bucket.Transparent);
-		
+
 		geom.setMesh(new Box(1, 1, 1)); // dummy mesh for now.
 		geom.setShadowMode(ShadowMode.CastAndReceive);
-		
+
 		generator = new FaceCullMeshGenerator(size, blockSize, location, blocks);
 
 
 	}
-	
+
 
 	@Override
 	public void setSpatial(Spatial spatial) {
@@ -71,8 +71,8 @@ public class ChunkControl extends AbstractControl implements Savable {
 
 
 
-	public void putBlock(Vector3Int at, IBlock blockType){
-		this.updateBlockAt(at,blockType);
+	public boolean putBlock(Vector3Int at, IBlock blockType){
+		return this.updateBlockAt(at,blockType);
 	}
 
 	public void removeBlock(Vector3Int from){
@@ -86,13 +86,17 @@ public class ChunkControl extends AbstractControl implements Savable {
 		return null;
 	}
 
-	private void updateBlockAt(final Vector3Int at, IBlock type){
-		if(this.isValidPosition(at)){
-			blocks[at.getX()][at.getY()][at.getZ()] = type;
-			needsUpdate = true;
+	private boolean updateBlockAt(final Vector3Int at, IBlock type){
+		if (this.isValidPosition(at)) {
+			if (blocks[at.getX()][at.getY()][at.getZ()] != type) {
+				blocks[at.getX()][at.getY()][at.getZ()] = type;
+				needsUpdate = true;
+				return true;
+			}
 		}
+		return false;
 	}
-	
+
 
 	@Override
 	protected void controlUpdate(float tpf) {
@@ -102,8 +106,8 @@ public class ChunkControl extends AbstractControl implements Savable {
 			geom.updateModelBound();
 		}
 	}
-	
-	
+
+
 	@Override
 	protected void controlRender(RenderManager rm, ViewPort vp) {
 	}

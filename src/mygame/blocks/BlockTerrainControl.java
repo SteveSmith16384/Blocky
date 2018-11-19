@@ -33,7 +33,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	private final Set<ChunkControl> updateables = new HashSet<ChunkControl>();
 	private final List<IBlockTerrainListener> listeners = new ArrayList<IBlockTerrainListener>();
 
-	private boolean needsUpdate = false;
+	//private boolean needsUpdate = false;
 
 	public BlockTerrainControl(BlockSettings settings) {
 		this.worldSizeInChunks = settings.getWorldSizeInChunks();
@@ -47,7 +47,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 
 	@Override
 	protected void controlUpdate(float tpf) {
-		if (needsUpdate) {
+		if (updateables.size() > 0) {
 			for (ChunkControl c : this.updateables) {
 				c.update(tpf);
 				for (IBlockTerrainListener l : listeners) {
@@ -56,7 +56,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 			}
 
 			this.updateables.clear();
-			needsUpdate = false;
+			//needsUpdate = false;
 		}
 	}
 
@@ -82,36 +82,41 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		}
 		this.updateBlock(location, block);
 	}
+	
 
 	public void removeBlock(Vector3Int location){
 		this.updateBlock(location, null);
 	}
 
+	
 	public IBlock getBlock(Vector3Int location){
 		ChunkPosition chunkPosition = getValidChunk(location);
 		return chunkPosition.chunk.getBlock(chunkPosition.positionInChunk);
 	}
 
+	
 	public BlockSettings getSettings() {
 		return settings;
 	}
 
+	
 	public ChunkControl[][][] getChunks() {
 		return chunks;
 	}
 
-
+	/*
 	void setNeedsUpdate(boolean needsUpdate) {
 		this.needsUpdate = needsUpdate;
 	}
-
+	 */
 
 	private void updateBlock(Vector3Int location, IBlock block){
 		ChunkPosition chunkPosition = getValidChunk(location);
 		ChunkControl chunk = chunkPosition.chunk;
-		chunk.putBlock(chunkPosition.positionInChunk, block);
-		this.updateables.add(chunk);
-		this.needsUpdate = true;
+		if (chunk.putBlock(chunkPosition.positionInChunk, block)) {
+			this.updateables.add(chunk);
+			//this.needsUpdate = true;
+		}
 	}
 
 
