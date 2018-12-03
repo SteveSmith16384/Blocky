@@ -115,10 +115,17 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		ChunkControl chunk = chunkPosition.chunk;
 		if (chunk.putBlock(chunkPosition.positionInChunk, block)) {
 			this.updateables.add(chunk);
-			//this.needsUpdate = true;
 		}
 	}
 
+/*
+	private void removeBlock(Vector3Int location){
+		ChunkPosition chunkPosition = getValidChunk(location);
+		ChunkControl chunk = chunkPosition.chunk;
+		chunk.removeBlock(chunkPosition.positionInChunk);
+			this.updateables.add(chunk);
+	}
+*/
 
 	private ChunkPosition getValidChunk(Vector3Int location){
 		int x = location.getX();

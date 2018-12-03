@@ -72,13 +72,13 @@ public class ChunkControl extends AbstractControl implements Savable {
 
 
 	public boolean putBlock(Vector3Int at, IBlock blockType){
-		return this.updateBlockAt(at,blockType);
+		return this.updateBlockAt(at, blockType);
 	}
-
-	public void removeBlock(Vector3Int from){
+/*
+	public void removeBlock_(Vector3Int from){
 		this.updateBlockAt(from, null);
 	}
-
+*/
 	public IBlock getBlock(Vector3Int from){
 		if(isValidPosition(from)){
 			return blocks[from.getX()][from.getY()][from.getZ()];

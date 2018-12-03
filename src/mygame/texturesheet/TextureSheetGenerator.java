@@ -71,7 +71,7 @@ public class TextureSheetGenerator {
 		File file = new File(path + outputFilename + ".png");
 		ImageIO.write(bufferedImage, "png", file);
 
-		System.out.println(outputFilename + ".png created.");
+		System.out.println(outputFilename + ".png created.  DO NOT FORGET TO REFRESH YOUR PROJECT!");
 	}
 
 
