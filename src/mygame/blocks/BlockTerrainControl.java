@@ -104,11 +104,6 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		return chunks;
 	}
 
-	/*
-	void setNeedsUpdate(boolean needsUpdate) {
-		this.needsUpdate = needsUpdate;
-	}
-	 */
 
 	private void updateBlock(Vector3Int location, IBlock block){
 		ChunkPosition chunkPosition = getValidChunk(location);
