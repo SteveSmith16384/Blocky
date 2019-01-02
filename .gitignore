@@ -12,3 +12,5 @@ jinput-dx8.dll
 jinput-dx8_64.dll
 jinput-raw.dll
 jinput-raw_64.dll
+/target/
+/.settings/
