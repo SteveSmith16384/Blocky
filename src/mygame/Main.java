@@ -73,11 +73,11 @@ public class Main extends SimpleApplication implements ActionListener {
 		blockSettings.setBlockSize(1f);
 		blockSettings.setMaterial(assetManager.loadMaterial("Materials/BlockyTexture.j3m"));
 		blockSettings.setWorldSizeInChunks(new Vector3Int(50, 10, 50));
-		blockSettings.setViewDistance(200f);
+		//blockSettings.setViewDistance(200f);
 
 		BlockTerrainControl blocks = new BlockTerrainControl(blockSettings);
 
-		this.cam.setFrustumFar(blockSettings.getViewDistance());
+		this.cam.setFrustumFar(200f);
 
 		player = new PhysicsCharacter(new CapsuleCollisionShape(1.5f, 4f), .2f);
 		player.setJumpSpeed(20);

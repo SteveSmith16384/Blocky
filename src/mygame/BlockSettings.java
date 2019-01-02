@@ -14,7 +14,7 @@ public class BlockSettings {
 	private Vector3Int chunkSize;
 	private Material material;
 	private float blockSize = 1f;
-	private float viewDistance = 200f;
+	//private float viewDistance = 200f;
 	public int texturesPerSheet = 16;
 
 	public BlockSettings() {
@@ -58,13 +58,13 @@ public class BlockSettings {
 	public float getBlockSize() {
 		return blockSize;
 	}
-
+/*
 	public void setViewDistance(float viewDistance) {
 		this.viewDistance = viewDistance;
 	}
-
+/*
 	public float getViewDistance() {
 		return this.viewDistance;
 	}
-
+*/
 }
