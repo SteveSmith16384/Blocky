@@ -45,7 +45,7 @@ import mygame.util.Vector3Int;
 public class Main extends SimpleApplication implements ActionListener {
 
 	private static final boolean RECORD_VID = false;
-	
+
 	public static void main(String[] args) {
 		Main app = new Main();
 		AppSettings settings = new AppSettings(true);
@@ -62,7 +62,7 @@ public class Main extends SimpleApplication implements ActionListener {
 
 	@Override
 	public void simpleInitApp() {
-		assetManager.registerLocator("assets/", FileLocator.class); // default
+		//assetManager.registerLocator("assets/", FileLocator.class); // default
 
 		final BulletAppState bas = new BulletAppState(PhysicsSpace.BroadphaseType.DBVT);
 		bas.setThreadingType(BulletAppState.ThreadingType.PARALLEL);
@@ -73,18 +73,19 @@ public class Main extends SimpleApplication implements ActionListener {
 		blockSettings.setBlockSize(1f);
 		blockSettings.setMaterial(assetManager.loadMaterial("Materials/BlockyTexture.j3m"));
 		blockSettings.setWorldSizeInChunks(new Vector3Int(50, 10, 50));
-		//blockSettings.setViewDistance(200f);
 
 		BlockTerrainControl blocks = new BlockTerrainControl(blockSettings);
 
 		this.cam.setFrustumFar(200f);
+		//this.cam.setLocation(new Vector3f(100, 50, 100));
+		//this.cam.lookAt(new Vector3f(50, 0, 50), Vector3f.UNIT_Y);
 
 		player = new PhysicsCharacter(new CapsuleCollisionShape(1.5f, 4f), .2f);
 		player.setJumpSpeed(20);
 		player.setFallSpeed(30);
 		player.setGravity(0);
 
-		player.setPhysicsLocation(new Vector3f(50, 100, 50));
+		player.setPhysicsLocation(new Vector3f(50, 4, 50));
 		bas.getPhysicsSpace().add(player);
 
 		final Node terrain = new Node();
@@ -98,7 +99,7 @@ public class Main extends SimpleApplication implements ActionListener {
 		heightmap.load();
 		blocks.loadFromHeightMap(new Vector3Int(0, 0, 0), heightmap, StoneBlock.class);		
 
-		// Create a moon manually
+		// Create a moon
 		int diameter = 16;
 		for (int z = 0; z < diameter; z++) {
 			for (int y = 0; y < diameter; y++) {
@@ -192,7 +193,7 @@ public class Main extends SimpleApplication implements ActionListener {
 			VideoRecorderAppState video_recorder = new VideoRecorderAppState();
 			stateManager.attach(video_recorder);
 		}
-		
+
 	}
 
 	private void setupKeys() {
@@ -230,27 +231,15 @@ public class Main extends SimpleApplication implements ActionListener {
 
 
 
-	public void onAction(String binding, boolean value, float tpf) {
+	public void onAction(String binding, boolean isPressed, float tpf) {
 		if (binding.equals("Lefts")) {
-			if(value)
-				left=true;
-			else
-				left=false;
+			left=isPressed;
 		} else if (binding.equals("Rights")) {
-			if(value)
-				right=true;
-			else
-				right=false;
+			right=isPressed;
 		} else if (binding.equals("Ups")) {
-			if(value)
-				up=true;
-			else
-				up=false;
+			up=isPressed;
 		} else if (binding.equals("Downs")) {
-			if(value)
-				down=true;
-			else
-				down=false;
+			down=isPressed;
 		} else if (binding.equals("Space")) {
 			player.jump();
 		}
