@@ -170,10 +170,14 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 
 
 	public Vector3Int getPointedBlockLocation(Vector3Int collisionLocation) {//, boolean getNeighborLocation) {
+		float x = collisionLocation.getX();
+		//if (x)
+		float y = collisionLocation.getY();
+		float z = collisionLocation.getZ();
 		Vector3Int blockLocation = new Vector3Int(
-				(int) (collisionLocation.getX() / this.getSettings().getBlockSize()),
-				(int) (collisionLocation.getY() / this.getSettings().getBlockSize()),
-				(int) (collisionLocation.getZ() / this.getSettings().getBlockSize()));
+				(int) (x / this.getSettings().getBlockSize()),
+				(int) (y / this.getSettings().getBlockSize()),
+				(int) (z / this.getSettings().getBlockSize()));
 		/*
 		if((this.getBlock(blockLocation) != null) == getNeighborLocation){
 			if((collisionLocation.getX() % this.getSettings().getBlockSize()) == 0) {
@@ -187,6 +191,26 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 			}
 		}
 		 */
+		return blockLocation;
+	}
+
+
+	public Vector3Int getPointedBlockLocation(Vector3f collisionLocation, boolean getNeighborLocation) {
+		Vector3Int blockLocation = new Vector3Int(
+				(int) (collisionLocation.getX() / this.getSettings().getBlockSize()),
+				(int) (collisionLocation.getY() / this.getSettings().getBlockSize()),
+				(int) (collisionLocation.getZ() / this.getSettings().getBlockSize()));
+
+		if ((this.getBlock(blockLocation) != null) == getNeighborLocation) {
+			if((collisionLocation.getX() % this.getSettings().getBlockSize()) == 0) {
+				blockLocation.subtractLocal(1, 0, 0);
+			} else if((collisionLocation.getY() % this.getSettings().getBlockSize()) == 0) {
+				blockLocation.subtractLocal(0, 1, 0);
+			} else if((collisionLocation.getZ() % this.getSettings().getBlockSize()) == 0) {
+				blockLocation.subtractLocal(0, 0, 1);
+			}
+		}
+
 		return blockLocation;
 	}
 
