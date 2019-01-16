@@ -53,8 +53,8 @@ public class TextureSheetGenerator {
 			}
 		}
 
-		// Draw numbers for debugging
 		/*
+		// Draw numbers for debugging
 		g2d.setColor(new Color(1f, 1f, 1f, 1f)); // Transparent background!
 		for (int i=0 ; i<tilesAcrossDown ; i++) {
 			for (int j=0 ; j<tilesAcrossDown ; j++) {
@@ -64,9 +64,9 @@ public class TextureSheetGenerator {
 				num++;
 			}
 		}
-		 */
 		g2d.dispose();
-
+*/
+		
 		// Save as PNG
 		File file = new File(path + outputFilename + ".png");
 		ImageIO.write(bufferedImage, "png", file);
