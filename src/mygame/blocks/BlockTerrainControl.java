@@ -82,24 +82,24 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		}
 		this.updateBlock(location, block);
 	}
-	
+
 
 	public void removeBlock(Vector3Int location){
 		this.updateBlock(location, null);
 	}
 
-	
+
 	public IBlock getBlock(Vector3Int location){
 		ChunkPosition chunkPosition = getValidChunk(location);
 		return chunkPosition.chunk.getBlock(chunkPosition.positionInChunk);
 	}
 
-	
+
 	public BlockSettings getSettings() {
 		return settings;
 	}
 
-	
+
 	public ChunkControl[][][] getChunks() {
 		return chunks;
 	}
@@ -113,14 +113,14 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 		}
 	}
 
-/*
+	/*
 	private void removeBlock(Vector3Int location){
 		ChunkPosition chunkPosition = getValidChunk(location);
 		ChunkControl chunk = chunkPosition.chunk;
 		chunk.removeBlock(chunkPosition.positionInChunk);
 			this.updateables.add(chunk);
 	}
-*/
+	 */
 
 	private ChunkPosition getValidChunk(Vector3Int location){
 		int x = location.getX();
@@ -141,15 +141,19 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 			z -= chunkSize.getZ();
 			cZ++;
 		}
-		ChunkControl chunk = this.chunks[cX][cY][cZ];
-		if(chunk == null){
-			chunk = new ChunkControl(this, new Vector3Int(cX,cY,cZ));
+		try {
+			ChunkControl chunk = this.chunks[cX][cY][cZ];
+			if(chunk == null) {
+				chunk = new ChunkControl(this, new Vector3Int(cX,cY,cZ));
 
-			chunk.setSpatial(this.spatial);
-			this.chunks[cX][cY][cZ] = chunk;
+				chunk.setSpatial(this.spatial);
+				this.chunks[cX][cY][cZ] = chunk;
+			}
+
+			return new ChunkPosition(chunk, new Vector3Int(x, y, z));
+		} catch (ArrayIndexOutOfBoundsException ex) {
+			throw new RuntimeException("Chunk " + cX + "," + cY + "," + cZ + " is outside the array", ex);
 		}
-
-		return new ChunkPosition(chunk, new Vector3Int(x, y, z));
 	}
 
 	private static final class ChunkPosition {

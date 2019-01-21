@@ -20,6 +20,13 @@ public class Vector3Int {
 	}
 
 
+	public Vector3Int(float x, float y, float z) {
+		this.x = (int)x;
+		this.y = (int)y;
+		this.z = (int)z;
+	}
+
+
 	public Vector3Int(Vector3f pos) {
 		this.x = (int)pos.x;
 		this.y = (int)pos.y;
