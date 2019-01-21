@@ -151,7 +151,6 @@ public class Main extends SimpleApplication implements ActionListener {
 		hudText.setColor(ColorRGBA.White);
 		hudText.setText("+");
 		hudText.setLocalTranslation(this.settings.getWidth() / 2 - hudText.getLineWidth()/2, this.settings.getHeight() / 2 + hudText.getLineHeight(), 0); // position
-
 		guiNode.attachChild(hudText);
 
 		rootNode.attachChild(terrain);
