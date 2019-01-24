@@ -33,8 +33,6 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	private final Set<ChunkControl> updateables = new HashSet<ChunkControl>();
 	private final List<IBlockTerrainListener> listeners = new ArrayList<IBlockTerrainListener>();
 
-	//private boolean needsUpdate = false;
-
 	public BlockTerrainControl(BlockSettings settings) {
 		this.worldSizeInChunks = settings.getWorldSizeInChunks();
 		this.chunkSize = settings.getChunkSize();
@@ -70,7 +68,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 
 	public void setBlock(Vector3Int location, Class<? extends IBlock> blockType) {
 		IBlock block = this.blockTypes.get(blockType);
-		if (block == null) {
+		if (block == null && blockType != null) {
 			//throw new RuntimeException("Block " + blockType + " not registered");
 			//this.blockTypes.put(arg0, arg1)
 			try {
@@ -279,7 +277,7 @@ public class BlockTerrainControl extends AbstractControl implements Savable {
 	}
 
 
-	public void setBlockAreaBySphere(Vector3Int location, int diameter, Class<? extends IBlock> blockClass){
+	public void setBlockAreaBySphere(Vector3Int location, int diameter, Class<? extends IBlock> blockClass) {
 		int rad = diameter/2;
 		Vector3Int tmpLocation = new Vector3Int();
 		for (int z = 0; z < diameter; z++) {
